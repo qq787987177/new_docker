@@ -1,7 +1,8 @@
 FROM debian:9
 
 COPY sources.list /etc/apt/sources.list
-COPY phpredis-php7 /etc/phpredis
+COPY phpredis /etc/phpredis
+COPY composer /usr/local/bin/composer
 COPY start.sh /
 
 WORKDIR /var/www/html
@@ -17,6 +18,8 @@ RUN apt-get update && apt -y install apt-transport-https ca-certificates wget \
     && phpize && ./configure --with-php-config=/usr/bin/php-config && make && make install \
     && sed -i 's/;extension=xsl/;extension=xsl\n extension=redis.so/g' /etc/php/7.3/fpm/php.ini \
     && sed -i 's/;extension=xsl/;extension=xsl\n extension=redis.so/g' /etc/php/7.3/cli/php.ini \
+    && chmod +x /usr/local/bin/composer \
+    && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
     && apt-get remove -y wget apt-transport-https ca-certificates \
     && apt-get clean && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /etc/phpredis

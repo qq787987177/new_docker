@@ -3,3 +3,5 @@ elasticsearch/*
 mysql/*
 .idea/*
 Dockerfile/.idea
+Dockerfile/phpredis
+Dockerfile/composer
