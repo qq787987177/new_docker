@@ -1,7 +1,7 @@
 version: '2'
 services:
   php:
-    image: registry.cn-hangzhou.aliyuncs.com/ytoken/php:5.0
+    image: registry.cn-hangzhou.aliyuncs.com/ytoken/php:6.0
     container_name: php
     tty: true
     volumes:
