@@ -2,6 +2,7 @@ FROM debian:9
 
 COPY sources.list /etc/apt/sources.list
 COPY phpredis /etc/phpredis
+COPY xdebug /etc/xdebug
 COPY composer /usr/local/bin/composer
 COPY start.sh /
 
@@ -16,8 +17,9 @@ RUN apt-get update && apt -y install apt-transport-https ca-certificates wget \
     && sed -i 's/;date.timezone =/date.timezone = "Asia\/Shanghai"/g' /etc/php/7.3/cli/php.ini \
     && cd /etc/phpredis \
     && phpize && ./configure --with-php-config=/usr/bin/php-config && make && make install \
-    && sed -i 's/;extension=xsl/;extension=xsl\n extension=redis.so/g' /etc/php/7.3/fpm/php.ini \
-    && sed -i 's/;extension=xsl/;extension=xsl\n extension=redis.so/g' /etc/php/7.3/cli/php.ini \
+    && cd /etc/xdebug && ./rebuild.sh \
+    && sed -i 's/;extension=xsl/;extension=xsl\n extension=redis.so \n extension=xdebug.so/g' /etc/php/7.3/fpm/php.ini \
+    && sed -i 's/;extension=xsl/;extension=xsl\n extension=redis.so \n extension=xdebug.so/g' /etc/php/7.3/cli/php.ini \
     && chmod +x /usr/local/bin/composer \
     && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
     && apt-get remove -y wget apt-transport-https ca-certificates \

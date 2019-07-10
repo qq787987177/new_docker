@@ -5,3 +5,4 @@ mysql/*
 Dockerfile/.idea
 Dockerfile/phpredis
 Dockerfile/composer
+Dockerfile/xdebug
