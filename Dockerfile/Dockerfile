@@ -18,8 +18,8 @@ RUN apt-get update && apt -y install apt-transport-https ca-certificates wget \
     && cd /etc/phpredis \
     && phpize && ./configure --with-php-config=/usr/bin/php-config && make && make install \
     && cd /etc/xdebug && ./rebuild.sh \
-    && sed -i 's/;extension=xsl/;extension=xsl\n extension=redis.so \n extension=xdebug.so/g' /etc/php/7.3/fpm/php.ini \
-    && sed -i 's/;extension=xsl/;extension=xsl\n extension=redis.so \n extension=xdebug.so/g' /etc/php/7.3/cli/php.ini \
+    && sed -i 's/;extension=xsl/;extension=xsl\n extension=redis.so \n zend_extension=xdebug.so/g' /etc/php/7.3/fpm/php.ini \
+    && sed -i 's/;extension=xsl/;extension=xsl\n extension=redis.so \n zend_extension=xdebug.so/g' /etc/php/7.3/cli/php.ini \
     && chmod +x /usr/local/bin/composer \
     && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
     && apt-get remove -y wget apt-transport-https ca-certificates \
