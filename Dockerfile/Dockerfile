@@ -11,7 +11,7 @@ RUN apt-get update && apt -y install apt-transport-https ca-certificates wget \
     && wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
     && sh -c 'echo "deb https://packages.sury.org/php/ stretch main" > /etc/apt/sources.list.d/php.list' \
     && apt update \
-    && apt-get install -y php7.3 php7.3-common php7.3-fpm php7.3-mbstring php7.3-xml php7.3-json php7.3-gd php7.3-curl php7.3-gmp php7.3-mysql php7.3-dev \
+    && apt-get install -y php7.3 php7.3-zip zip unzip php7.3-common php7.3-fpm php7.3-mbstring php7.3-xml php7.3-json php7.3-gd php7.3-curl php7.3-gmp php7.3-mysql php7.3-dev \
     && sed -i 's/;date.timezone =/date.timezone = "Asia\/Shanghai"/g' /etc/php/7.3/fpm/php.ini \
     && sed -i 's/;date.timezone =/date.timezone = "Asia\/Shanghai"/g' /etc/php/7.3/cli/php.ini \
     && cd /etc/phpredis \

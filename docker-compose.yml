@@ -1,19 +1,20 @@
 version: '2'
 services:
   php:
-    image: registry.cn-hangzhou.aliyuncs.com/ytoken/php:6.0
+    image: registry.cn-hangzhou.aliyuncs.com/ytoken/php:7.0
     container_name: php
     tty: true
     volumes:
-      - '/home/yangyi/workspace:/var/www/html'
+      - '/Users/ushopal_it/workspace:/var/www/html'
       - './logs:/dev/shm'
       - './php:/etc/php/7.3/fpm/pool.d'
     networks:
       comm:
+        ipv4_address: 172.50.0.3
         aliases:
           - php
     ports:
-     - "9000:9000"
+      - "9000:9000"
   nginx:
     image: nginx:1.15
     container_name: nginx
@@ -26,17 +27,19 @@ services:
       - './nginx/ssl:/etc/nginx/ssl'
     networks:
       comm:
+        ipv4_address: 172.50.0.2
         aliases:
           - nginx
     ports:
-     - "80:80"
-     - "443:443"
+      - "80:80"
+      - "443:443"
   redis:
     image: redis
     container_name: redis
     tty: true
     networks:
       comm:
+        ipv4_address: 172.50.0.4
         aliases:
           - redis
     ports:
@@ -49,12 +52,13 @@ services:
       - './mysql:/var/lib/mysql'
     networks:
       comm:
+        ipv4_address: 172.50.0.5
         aliases:
           - mysql
     ports:
       - "127.0.0.1:3307:3306"
     environment:
-        - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_ROOT_PASSWORD=123456
   elasticsearch:
     image: elasticsearch:5.2.2
     container_name: elasticsearch
@@ -63,9 +67,13 @@ services:
       - './elasticsearch:/usr/share/elasticsearch/data'
     networks:
       comm:
+        ipv4_address: 172.50.0.6
         aliases:
           - elasticsearch
     ports:
       - "127.0.0.1:9200:9200"
 networks:
-    comm:
+  comm:
+    ipam:
+      config:
+        - subnet: 172.50.0.0/16
