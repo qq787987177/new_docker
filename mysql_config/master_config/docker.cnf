@@ -1,0 +1,7 @@
+[mysqld]
+skip-host-cache
+skip-name-resolve
+
+server-id = 1
+read-only = 0
+log-bin=mysql-bin

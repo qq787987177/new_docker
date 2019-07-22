@@ -1,6 +1,8 @@
 logs/*
 elasticsearch/*
 mysql/*
+mysql_master/*
+mysql_slave/*
 .idea/*
 Dockerfile/.idea
 Dockerfile/phpredis

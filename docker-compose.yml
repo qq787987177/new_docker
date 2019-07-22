@@ -59,19 +59,51 @@ services:
       - "127.0.0.1:3307:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=123456
-  elasticsearch:
-    image: elasticsearch:5.2.2
-    container_name: elasticsearch
-    tty: true
-    volumes:
-      - './elasticsearch:/usr/share/elasticsearch/data'
-    networks:
-      comm:
-        ipv4_address: 172.50.0.6
-        aliases:
-          - elasticsearch
-    ports:
-      - "127.0.0.1:9200:9200"
+#  mysql_master:
+#    image: mysql:5.7.26
+#    container_name: mysql_master
+#    tty: true
+#    volumes:
+#      - './mysql_master:/var/lib/mysql'
+#      - './mysql_config/master_config:/etc/mysql/conf.d'
+#    networks:
+#      comm:
+#        ipv4_address: 172.50.0.5
+#        aliases:
+#          - mysql_master
+#    ports:
+#      - "127.0.0.1:3307:3306"
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=123456
+#  mysql_slave:
+#    image: mysql:5.7.26
+#    container_name: mysql_slave
+#    tty: true
+#    volumes:
+#      - './mysql_slave:/var/lib/mysql'
+#      - './mysql_config/slave_config:/etc/mysql/conf.d'
+#    networks:
+#      comm:
+#        ipv4_address: 172.50.0.6
+#        aliases:
+#          - mysql_master
+#    ports:
+#      - "127.0.0.1:3308:3306"
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=123456
+#  elasticsearch:
+#    image: elasticsearch:5.2.2
+#    container_name: elasticsearch
+#    tty: true
+#    volumes:
+#      - './elasticsearch:/usr/share/elasticsearch/data'
+#    networks:
+#      comm:
+#        ipv4_address: 172.50.0.6
+#        aliases:
+#          - elasticsearch
+#    ports:
+#      - "127.0.0.1:9200:9200"
 networks:
   comm:
     ipam:
