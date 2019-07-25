@@ -1,13 +1,13 @@
 version: '2'
 services:
   php:
-    image: registry.cn-hangzhou.aliyuncs.com/ytoken/php:8.0
+    image: registry.cn-hangzhou.aliyuncs.com/ytoken/php-alpine:1.0
     container_name: php
     tty: true
     volumes:
-      - '/Users/ushopal_it/workspace:/var/www/html'
+      - '/Users/ushopal_it/workspace:/www'
       - './logs:/dev/shm'
-      - './php:/etc/php/7.3/fpm/pool.d'
+      - './php-alpine:/etc/php7/php-fpm.d'
     networks:
       comm:
         ipv4_address: 172.50.0.3
