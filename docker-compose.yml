@@ -50,6 +50,7 @@ services:
     tty: true
     volumes:
       - './mysql:/var/lib/mysql'
+      - './mysql_config/config:/etc/mysql/conf.d'
     networks:
       comm:
         ipv4_address: 172.50.0.5
