@@ -1,0 +1,112 @@
+version: '2'
+services:
+  php:
+    image: ccr.ccs.tencentyun.com/workspace-y/php-al:1.0
+    container_name: php
+    tty: true
+    volumes:
+      - '/Users/ushopal_it/workspace:/www'
+      - './logs:/dev/shm'
+      - './php-alpine:/etc/php7/php-fpm.d'
+    networks:
+      comm:
+        ipv4_address: 172.50.0.3
+        aliases:
+          - php
+    ports:
+      - "9000:9000"
+  nginx:
+    image: nginx:1.17-alpine
+    container_name: nginx
+    tty: true
+    volumes_from:
+      - php
+    volumes:
+      - './logs:/var/log/nginx/'
+      - './nginx/conf.d:/etc/nginx/conf.d'
+      - './nginx/ssl:/etc/nginx/ssl'
+    networks:
+      comm:
+        ipv4_address: 172.50.0.2
+        aliases:
+          - nginx
+    ports:
+      - "80:80"
+      - "443:443"
+  redis:
+    image: redis:5.0-alpine
+    container_name: redis
+    tty: true
+    networks:
+      comm:
+        ipv4_address: 172.50.0.4
+        aliases:
+          - redis
+    ports:
+      - "127.0.0.1:6379:6379"
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    tty: true
+    volumes:
+      - './mysql:/var/lib/mysql'
+      - './mysql_config/config:/etc/mysql/conf.d'
+    networks:
+      comm:
+        ipv4_address: 172.50.0.5
+        aliases:
+          - mysql
+    ports:
+      - "127.0.0.1:3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+#  mysql_master:
+#    image: mysql:5.7.26
+#    container_name: mysql_master
+#    tty: true
+#    volumes:
+#      - './mysql_master:/var/lib/mysql'
+#      - './mysql_config/master_config:/etc/mysql/conf.d'
+#    networks:
+#      comm:
+#        ipv4_address: 172.50.0.5
+#        aliases:
+#          - mysql_master
+#    ports:
+#      - "127.0.0.1:3307:3306"
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=123456
+#  mysql_slave:
+#    image: mysql:5.7.26
+#    container_name: mysql_slave
+#    tty: true
+#    volumes:
+#      - './mysql_slave:/var/lib/mysql'
+#      - './mysql_config/slave_config:/etc/mysql/conf.d'
+#    networks:
+#      comm:
+#        ipv4_address: 172.50.0.6
+#        aliases:
+#          - mysql_master
+#    ports:
+#      - "127.0.0.1:3308:3306"
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=123456
+#  elasticsearch:
+#    image: elasticsearch:5.2.2
+#    container_name: elasticsearch
+#    tty: true
+#    volumes:
+#      - './elasticsearch:/usr/share/elasticsearch/data'
+#    networks:
+#      comm:
+#        ipv4_address: 172.50.0.6
+#        aliases:
+#          - elasticsearch
+#    ports:
+#      - "127.0.0.1:9200:9200"
+networks:
+  comm:
+    ipam:
+      config:
+        - subnet: 172.50.0.0/16
